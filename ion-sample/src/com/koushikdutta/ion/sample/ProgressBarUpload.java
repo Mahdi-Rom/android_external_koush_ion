@@ -59,7 +59,8 @@ public class ProgressBarUpload extends Activity {
 
                 upload.setText("Cancel");
                 // this is a 180MB zip file to test with
-                uploading = Ion.with(ProgressBarUpload.this, "http://koush.clockworkmod.com/test/echo")
+                uploading = Ion.with(ProgressBarUpload.this)
+                .load("http://koush.clockworkmod.com/test/echo")
                 // attach the percentage report to a progress bar.
                 // can also attach to a ProgressDialog with progressDialog.
                 .uploadProgressBar(progressBar)
@@ -68,7 +69,7 @@ public class ProgressBarUpload extends Activity {
                 // Updates to TextViews MUST happen on the UI thread.
                 .uploadProgressHandler(new ProgressCallback() {
                     @Override
-                    public void onProgress(int downloaded, int total) {
+                    public void onProgress(long downloaded, long total) {
                         uploadCount.setText("" + downloaded + " / " + total);
                     }
                 })

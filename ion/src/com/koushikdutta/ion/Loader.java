@@ -1,5 +1,7 @@
 package com.koushikdutta.ion;
 
+import android.content.Context;
+
 import com.koushikdutta.async.DataEmitter;
 import com.koushikdutta.async.future.Future;
 import com.koushikdutta.async.future.FutureCallback;
@@ -19,7 +21,7 @@ public interface Loader {
         public static final int LOADED_FROM_CONDITIONAL_CACHE = 2;
         public static final int LOADED_FROM_NETWORK = 3;
 
-        public LoaderEmitter(DataEmitter emitter, int length, int loadedFrom, RawHeaders headers, AsyncHttpRequest request) {
+        public LoaderEmitter(DataEmitter emitter, long length, int loadedFrom, RawHeaders headers, AsyncHttpRequest request) {
             this.length = length;
             this.emitter = emitter;
             this.loadedFrom = loadedFrom;
@@ -27,11 +29,11 @@ public interface Loader {
             this.request = request;
         }
         DataEmitter emitter;
-        int length;
+        long length;
         public DataEmitter getDataEmitter() {
             return emitter;
         }
-        public int length() {
+        public long length() {
             return length;
         }
         int loadedFrom;
@@ -78,7 +80,7 @@ public interface Loader {
      * @param resizeHeight
      * @return
      */
-    public Future<BitmapInfo> loadBitmap(Ion ion, String key, String uri, int resizeWidth, int resizeHeight);
+    public Future<BitmapInfo> loadBitmap(Context context, Ion ion, String key, String uri, int resizeWidth, int resizeHeight, boolean animateGif);
 
     /**
      * Resolve a request into another request.
@@ -86,5 +88,5 @@ public interface Loader {
      * @param request
      * @return
      */
-    public Future<AsyncHttpRequest> resolve(Ion ion, AsyncHttpRequest request);
+    public Future<AsyncHttpRequest> resolve(Context context, Ion ion, AsyncHttpRequest request);
 }
